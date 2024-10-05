@@ -1,0 +1,30 @@
+{
+  "name": "macsploit-execute",
+  "displayName": "MacSploit Execute",
+  "author": "Snipcola",
+  "publisher": "Snipcola",
+  "version": "0.0.1",
+  "description": "Execute scripts using MacSploit.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://git.snipcola.com/snipcola/MacSploit-Execute.git"
+  },
+  "scripts": {
+    "build": "vsce package --out extension.vsix",
+    "release": "vsce publish"
+  },
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./extension.js",
+  "dependencies": {
+    "net": "^1.0.2"
+  },
+  "devDependencies": {
+    "@vscode/vsce": "^3.1.1"
+  }
+}
