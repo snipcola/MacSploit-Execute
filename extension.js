@@ -52,57 +52,81 @@ function getBuffer(contents) {
 }
 
 function execute(port) {
-  const client = clients.find((c) => c.port === port);
+  const client = port !== "all" && clients.find((c) => c.port === port);
   const editor = vscode.window.activeTextEditor;
   const script = editor && editor.document.getText();
 
   if (client && script) {
     client.socket.write(getBuffer(script));
+  } else if (port === "all" && script) {
+    const buffer = getBuffer(script);
+
+    for (const { socket } of clients) {
+      socket.write(buffer);
+    }
   }
 }
 
 function clearButtons() {
-  buttons.forEach(function ({ button }) {
+  for (const { button } of buttons) {
     button.dispose();
-  });
+  }
 
   buttons = [];
 }
 
+let number = 0;
+
+function addButton(port, all) {
+  if (all) port = "all";
+
+  const button = vscode.window.createStatusBarItem(
+    config.button.position,
+    config.button.priority - number,
+  );
+
+  button.text = `Execute [${all ? "All" : number + 1}]`;
+  button.command = {
+    command: config.command,
+    arguments: [port],
+  };
+
+  number++;
+  buttons.push({
+    button,
+    port,
+  });
+}
+
 function setButtons() {
   clearButtons();
-  clients.forEach(function ({ port }) {
-    const number = port - config.port.min;
-    const button = vscode.window.createStatusBarItem(
-      config.button.position,
-      config.button.priority - number,
-    );
+  number = 0;
 
-    button.text = `Execute [${number + 1}]`;
-    button.command = {
-      command: config.command,
-      arguments: [port],
-    };
+  for (const { port } of clients) {
+    addButton(port);
+  }
 
-    buttons.push({
-      button,
-      port,
-    });
-  });
+  if (clients.length > 1) {
+    addButton(null, true);
+  }
 }
 
 function showButtons() {
-  buttons.forEach(({ button }) => button.show());
+  for (const { button } of buttons) {
+    button.show();
+  }
 }
 
 function hideButtons() {
-  buttons.forEach(({ button }) => button.hide());
+  for (const { button } of buttons) {
+    button.hide();
+  }
 }
 
 function clearClients() {
-  clients.forEach(function (client) {
-    client.socket.destroy();
-  });
+  for (const { socket } of clients) {
+    socket.destroy();
+  }
 
   clients = [];
 }
