@@ -14,6 +14,7 @@ const config = {
     max: 5563,
   },
   extensions: ["lua", "luau", "txt"],
+  languages: ["lua", "plaintext"],
   interval: 500,
 };
 
@@ -34,8 +35,7 @@ function isValidFile() {
   const language = editor && editor.document.languageId;
 
   return (
-    config.extensions.includes(extension) ||
-    config.extensions.includes(language)
+    config.extensions.includes(extension) || config.languages.includes(language)
   );
 }
 
@@ -85,7 +85,7 @@ function addButton(port, all) {
     config.button.priority - number,
   );
 
-  button.text = `Execute [${all ? "All" : number + 1}]`;
+  button.text = `$(debug-start) ${all ? "All" : number + 1}`;
   button.command = {
     command: config.command,
     arguments: [port],
