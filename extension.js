@@ -40,13 +40,14 @@ function isValidFile() {
 }
 
 function getBuffer(contents) {
-  const buffer = Buffer.alloc(16 + contents.length + 1);
+  const byteLength = Buffer.byteLength(contents, "utf8");
+  const buffer = Buffer.alloc(16 + byteLength + 1);
 
   buffer.writeUInt8(0, 0);
-  buffer.writeUInt32LE(contents.length + 1, 8);
+  buffer.writeUInt32LE(byteLength + 1, 8);
 
-  buffer.write(contents, 16);
-  buffer.writeUInt8(0, 16 + contents.length);
+  buffer.write(contents, 16, "utf8");
+  buffer.writeUInt8(0, 16 + byteLength);
 
   return buffer;
 }
