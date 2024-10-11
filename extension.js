@@ -6,7 +6,7 @@ const config = {
   command: "macsploit-execute.execute-script",
   button: {
     position: vscode.StatusBarAlignment.Left,
-    priority: 0,
+    priority: -10,
   },
   host: "127.0.0.1",
   port: {
