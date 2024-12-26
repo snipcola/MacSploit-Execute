@@ -3,7 +3,7 @@
   "displayName": "MacSploit Execute",
   "author": "Snipcola",
   "publisher": "Snipcola",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Execute scripts using MacSploit.",
   "license": "MIT",
   "repository": {
@@ -22,9 +22,6 @@
     "onStartupFinished"
   ],
   "main": "src/extension.js",
-  "dependencies": {
-    "net": "1.0.2"
-  },
   "devDependencies": {
     "@vscode/vsce": "3.2.1",
     "prettier": "3.4.2",
