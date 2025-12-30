@@ -8,7 +8,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://git.snipcola.com/snipcola/MacSploit-Execute.git"
+    "url": "https://code.snipcola.st/snipcola/MacSploit-Execute"
   },
   "scripts": {
     "build": "rimraf out && mkdir out && vsce package --out out/extension.vsix",
